@@ -2,27 +2,26 @@ package main
 
 import (
 	"context"
-	"flag"
 	"os"
 	"os/signal"
 	"syscall"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-)
-
-var (
-	port     = flag.Int("port", 8080, "The server port")
-	dbPath   = flag.String("db_path", "./data/liveops.db", "Path to SQLite database file")
-	logLevel = flag.String("log_level", "info", "Log level (debug, info, warn, error)")
+	"github.com/tombombadilom/liveops/internal/api"
+	"github.com/tombombadilom/liveops/internal/auth"
+	"github.com/tombombadilom/liveops/internal/config"
+	"github.com/tombombadilom/liveops/internal/db"
+	"github.com/tombombadilom/liveops/internal/service"
 )
 
 func main() {
-	// Parse command line flags
-	flag.Parse()
+	// Load configuration
+	cfg := config.New()
+	cfg.ParseFlags()
 
 	// Configure logging
-	configureLogging(*logLevel)
+	configureLogging(cfg.LogLevel)
 	log.Info().Msg("Starting Live Ops Events System")
 
 	// Create a context that is canceled on interrupt signals
@@ -32,15 +31,37 @@ func main() {
 	// Handle graceful shutdown
 	setupSignalHandler(cancel)
 
-	// TODO: Initialize database
-	// TODO: Set up HTTP and gRPC servers
-	// TODO: Start the server
+	// Initialize database
+	database, err := db.New(cfg.DBPath)
+	if err != nil {
+		log.Fatal().Err(err).Str("path", cfg.DBPath).Msg("Failed to initialize database")
+	}
+	defer database.Close()
+	log.Info().Str("path", cfg.DBPath).Msg("Database initialized")
 
-	log.Info().Msgf("Server listening on port %d", *port)
+	// Create repositories
+	eventRepo := db.NewEventRepository(database)
+	userRepo := db.NewUserRepository(database)
+	apiKeyRepo := db.NewAPIKeyRepository(database)
 
-	// Keep the server running until context is canceled
+	// Create services
+	eventService := service.NewEventService(eventRepo)
+	authService := auth.NewAuthService(userRepo, apiKeyRepo)
+
+	// Create and start server
+	server := api.NewServer(cfg.Port, eventService, authService)
+	go func() {
+		if err := server.Start(); err != nil {
+			log.Fatal().Err(err).Msg("Server failed to start")
+		}
+	}()
+
+	log.Info().Int("port", cfg.Port).Msg("Server started")
+
+	// Wait for context cancellation (shutdown signal)
 	<-ctx.Done()
 	log.Info().Msg("Server shutting down")
+	server.Stop()
 }
 
 // configureLogging sets up the logger with the specified log level
@@ -74,4 +95,4 @@ func setupSignalHandler(cancel context.CancelFunc) {
 		log.Info().Msg("Received interrupt signal")
 		cancel()
 	}()
-} 
+}

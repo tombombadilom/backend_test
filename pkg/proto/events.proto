@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package events;
+
+option go_package = "github.com/tombombadilom/liveops/pkg/proto";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+// EventService provides methods to manage live events
+service EventService {
+  // ListEvents returns all events
+  rpc ListEvents(ListEventsRequest) returns (ListEventsResponse) {}
+  
+  // GetEvent returns a specific event by ID
+  rpc GetEvent(GetEventRequest) returns (Event) {}
+  
+  // CreateEvent creates a new event
+  rpc CreateEvent(CreateEventRequest) returns (Event) {}
+  
+  // UpdateEvent updates an existing event
+  rpc UpdateEvent(UpdateEventRequest) returns (Event) {}
+  
+  // DeleteEvent removes an event
+  rpc DeleteEvent(DeleteEventRequest) returns (google.protobuf.Empty) {}
+}
+
+// Event represents a live event
+message Event {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  google.protobuf.Timestamp start_time = 4;
+  google.protobuf.Timestamp end_time = 5;
+  string rewards = 6;
+}
+
+// ListEventsRequest is the request for ListEvents
+message ListEventsRequest {
+  bool active_only = 1;
+}
+
+// ListEventsResponse is the response for ListEvents
+message ListEventsResponse {
+  repeated Event events = 1;
+}
+
+// GetEventRequest is the request for GetEvent
+message GetEventRequest {
+  string id = 1;
+}
+
+// CreateEventRequest is the request for CreateEvent
+message CreateEventRequest {
+  string title = 1;
+  string description = 2;
+  google.protobuf.Timestamp start_time = 3;
+  google.protobuf.Timestamp end_time = 4;
+  string rewards = 5;
+  
+  // API key for authentication
+  string api_key = 99;
+}
+
+// UpdateEventRequest is the request for UpdateEvent
+message UpdateEventRequest {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  google.protobuf.Timestamp start_time = 4;
+  google.protobuf.Timestamp end_time = 5;
+  string rewards = 6;
+  
+  // API key for authentication
+  string api_key = 99;
+}
+
+// DeleteEventRequest is the request for DeleteEvent
+message DeleteEventRequest {
+  string id = 1;
+  
+  // API key for authentication
+  string api_key = 99;
+} 

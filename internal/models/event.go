@@ -58,4 +58,4 @@ func (e *LiveEvent) Validate() error {
 		}
 	}
 	return nil
-} 
+}
