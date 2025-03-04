@@ -45,7 +45,7 @@ The implementation is divided into four main phases to be completed within 2 day
 - [x] Set up role-based access control
 - [ ] Write unit tests for core functionality
 - [x] Implement error handling and logging
-- [ ] Test API endpoints manually
+- [x] Test API endpoints manually
 
 ### Day 2: Afternoon - Finalization and Documentation
 
@@ -221,9 +221,20 @@ The implementation is divided into four main phases to be completed within 2 day
 - **Estimated Time**: 30 minutes
 - **Status**: ✅ COMPLETED
 
+#### 15. Test API Endpoints Manually (12:00 - 12:30)
+- **Task**: Manually test API endpoints
+- **Details**:
+  - Test HTTP endpoints with curl
+  - Test gRPC endpoints with grpcurl
+  - Verify authentication works correctly
+  - Test role-based access control
+- **Success Criteria**: All endpoints working as expected
+- **Estimated Time**: 30 minutes
+- **Status**: ✅ COMPLETED
+
 ### Day 2: Afternoon - Finalization and Documentation (1:00 PM - 5:00 PM)
 
-#### 15. Create Dockerfile (1:00 - 1:45)
+#### 16. Create Dockerfile (1:00 - 1:45)
 - **Task**: Write multi-stage Dockerfile for the application
 - **Details**:
   - Create build stage for compilation
@@ -234,7 +245,7 @@ The implementation is divided into four main phases to be completed within 2 day
 - **Estimated Time**: 45 minutes
 - **Status**: 🔄 TODO
 
-#### 16. Write README.md (1:45 - 2:30)
+#### 17. Write README.md (1:45 - 2:30)
 - **Task**: Create comprehensive README with instructions
 - **Details**:
   - Add project overview
@@ -245,7 +256,7 @@ The implementation is divided into four main phases to be completed within 2 day
 - **Estimated Time**: 45 minutes
 - **Status**: 🔄 TODO
 
-#### 17. Document API Endpoints (2:30 - 3:15)
+#### 18. Document API Endpoints (2:30 - 3:15)
 - **Task**: Create detailed API documentation
 - **Details**:
   - Document HTTP endpoints with examples
@@ -256,7 +267,7 @@ The implementation is divided into four main phases to be completed within 2 day
 - **Estimated Time**: 45 minutes
 - **Status**: 🔄 TODO
 
-#### 18. Final Testing and Bug Fixes (3:15 - 4:15)
+#### 19. Final Testing and Bug Fixes (3:15 - 4:15)
 - **Task**: Perform end-to-end testing and fix issues
 - **Details**:
   - Test HTTP endpoints with curl
@@ -267,7 +278,7 @@ The implementation is divided into four main phases to be completed within 2 day
 - **Estimated Time**: 60 minutes
 - **Status**: 🔄 TODO
 
-#### 19. Code Cleanup and Optimization (4:15 - 5:00)
+#### 20. Code Cleanup and Optimization (4:15 - 5:00)
 - **Task**: Refactor code and optimize performance
 - **Details**:
   - Review code for consistency
@@ -281,8 +292,9 @@ The implementation is divided into four main phases to be completed within 2 day
 ## Remaining Tasks
 
 1. ~~**Generate gRPC Code**: Execute the script to generate Go code from protobuf definitions~~ ✅ COMPLETED
-2. **Write Unit Tests**: Create tests for core functionality
-3. **Create Dockerfile**: Set up containerization for the application
-4. **Update Documentation**: Complete README and API documentation
-5. **Final Testing**: Test all endpoints and fix any issues
-6. **Code Cleanup**: Refactor and optimize the codebase 
+2. ~~**Test API Endpoints Manually**: Test HTTP and gRPC endpoints~~ ✅ COMPLETED
+3. **Write Unit Tests**: Create tests for core functionality
+4. **Create Dockerfile**: Set up containerization for the application
+5. **Update Documentation**: Complete README and API documentation
+6. **Final Testing**: Test all endpoints and fix any issues
+7. **Code Cleanup**: Refactor and optimize the codebase 
